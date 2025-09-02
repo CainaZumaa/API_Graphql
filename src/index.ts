@@ -8,10 +8,9 @@ import { resolvers } from "./resolvers";
 async function startServer() {
   const app = express();
 
-  // Configuração mais permissiva do helmet para desenvolvimento
   app.use(
     helmet({
-      contentSecurityPolicy: false, // Desabilita CSP para permitir playground
+      contentSecurityPolicy: false,
       crossOriginEmbedderPolicy: false,
       crossOriginResourcePolicy: false,
     })
@@ -34,7 +33,6 @@ async function startServer() {
       {
         requestDidStart: async () => ({
           willSendResponse: async ({ response }) => {
-            // Adiciona headers para permitir playground
             if (response.http) {
               response.http.headers.set("Access-Control-Allow-Origin", "*");
               response.http.headers.set(
